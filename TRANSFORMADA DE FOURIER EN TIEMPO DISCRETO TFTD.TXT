@@ -1,0 +1,27 @@
+% Parámetros
+L = 20; % Longitud del pulso
+n = 0:L-1; % Vector de tiempo discreto
+N = 100; % Número de puntos de frecuencia
+fs = 1; % Frecuencia de muestreo
+% Generar el pulso de longitud L
+h = ones(1, L); % Un pulso de longitud L y amplitud 1
+% Crear el vector de frecuencias
+frequencies = linspace(-pi, pi, N);
+% Calcular la TFTD de h[n]
+H = fftshift(fft(h, N));
+% Graficar h[n]
+subplot(2, 1, 1);
+stem(n, h);
+title('h[n] - Pulso de longitud L');
+xlabel('n');
+ylabel('h[n]');
+% Graficar H
+subplot(2, 1, 2);
+stem(frequencies, abs(H));
+title('Transformada de Fourier en Tiempo Discreto (TFTD)');
+xlabel('Frecuencia (rad/muestra)');
+ylabel('|H|');
+% Ajustar los ejes para mejor visualización
+xlim([-pi, pi]);
+% Mostrar el gráfico
+grid on;

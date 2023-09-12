@@ -1,0 +1,33 @@
+% Parámetros para la señal X
+fs = 1000; % Frecuencia de muestreo en Hz (10 ms de período)
+amplitud_x = 1;
+frecuencia_x = 100;
+t = 0:1/fs:1-1/fs; % Vector de tiempo
+% Generar la señal X (senoidal)
+X = amplitud_x * sin(2*pi*frecuencia_x*t);
+% Calcular la autocorrelación de X
+autocorrelacion_X = xcorr(X, 'coeff');
+coeficiente_maximo_X = max(autocorrelacion_X);
+fprintf('Coeficiente máximo de autocorrelación de X: %.4f\n', coeficiente_maximo_X);
+% Generar señales Y con diferentes frecuencias
+amplitud_y = 1;
+frecuencias_y = 100:100:400;
+coeficientes_maximos_Y = zeros(size(frecuencias_y));
+
+for i = 1:length(frecuencias_y)
+    frecuencia_y = frecuencias_y(i);
+    % Generar la señal Y (senoidal con frecuencia variable)
+    Y = amplitud_y * sin(2*pi*frecuencia_y*t);    
+    % Calcular la correlación cruzada entre X e Y
+    correlacion_cruzada = xcorr(X, Y, 'coeff');   
+    % Encontrar el coeficiente máximo de la correlación cruzada
+    coeficientes_maximos_Y(i) = max(correlacion_cruzada);    
+    fprintf('Coeficiente máximo de correlación cruzada entre X e Y con frecuencia %d Hz: %.4f\n', frecuencia_y, coeficientes_maximos_Y(i));
+end
+% Gráfica de los coeficientes máximos en función de la frecuencia de Y
+figure;
+plot(frecuencias_y, coeficientes_maximos_Y, 'o-');
+title('Coeficientes máximos de correlación cruzada en función de la frecuencia de Y');
+xlabel('Frecuencia de Y (Hz)');
+ylabel('Coeficiente máximo de correlación cruzada');
+grid on;

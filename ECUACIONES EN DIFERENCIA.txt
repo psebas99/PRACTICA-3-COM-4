@@ -1,0 +1,14 @@
+% Coeficientes de la ecuación en diferencias
+a = [1, -1.143, 0.4128];
+b = [0.0675, 0.1349, 0.0675];
+% Crear un vector x que represente el impulso δ[n] de longitud 50
+x = zeros(1, 50);
+x(1) = 1; % Impulso en n = 0
+% Calcular la respuesta al impulso h[n]
+h = filter(b, a, x);
+% Graficar las primeras 20 muestras de h[n]
+stem(0:19, h(1:20), 'filled');
+title('Respuesta al Impulso h[n]');
+xlabel('n');
+ylabel('h[n]');
+grid on;

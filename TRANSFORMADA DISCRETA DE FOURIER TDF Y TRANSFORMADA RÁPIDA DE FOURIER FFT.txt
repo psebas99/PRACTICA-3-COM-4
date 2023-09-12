@@ -1,0 +1,37 @@
+% Parámetros de la señal
+fs = 1000; % Frecuencia de muestreo en Hz
+t = 0:1/fs:1-1/fs; % Vector de tiempo de 1 segundo
+% Generar dos señales senoidales
+amplitud1 = 1;
+amplitud2 = 0.8;
+frecuencia1 = 100;
+frecuencia2 = 300;
+senal1 = amplitud1 * sin(2*pi*frecuencia1*t);
+senal2 = amplitud2 * sin(2*pi*frecuencia2*t);
+% Sumar las dos señales
+senal_compuesta = senal1 + senal2;
+% Agregar ruido aleatorio de media cero
+ruido = randn(size(t)); % Generar ruido gaussiano
+senal_con_ruido = senal_compuesta + ruido;
+% Calcular la Transformada Discreta de Fourier (DFT)
+DFT = fft(senal_con_ruido);
+% Graficar la señal compuesta y la DFT
+figure;
+% Gráfico de la señal compuesta
+subplot(2,1,1);
+plot(t, senal_con_ruido);
+title('Señal compuesta con ruido');
+xlabel('Tiempo (s)');
+ylabel('Amplitud');
+% Gráfico de la DFT
+subplot(2,1,2);
+f = (0:length(DFT)-1) * fs / length(DFT); % Eje de frecuencia
+plot(f, abs(DFT));
+title('Transformada Discreta de Fourier');
+xlabel('Frecuencia (Hz)');
+ylabel('Magnitud');
+% Asegurarse de que los gráficos no estén superpuestos
+subplot(2,1,1);
+hold off;
+subplot(2,1,2);
+hold off;
